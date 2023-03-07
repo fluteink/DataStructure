@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
+using namespace std;
 #define InitSize 10
 typedef struct
 {
@@ -7,6 +10,27 @@ typedef struct
     int Maxsize;
     int length;
 } SqlList;
+int Del_min01(SqlList &L)
+{
+    int min, pos = 0;
+    if (L.length == 0)
+    {
+        printf("线性表为空，长度为0！");
+        return 0;
+    }
+    min = L.data[0];
+    for (size_t i = 1; i < L.length; i++)
+    {
+        if (L.data[i] < min)
+        {
+            min = L.data[i];
+            pos = i;
+        }
+    }
+    L.data[pos] = L.data[L.length - 1];
+    L.length--;
+    return min;
+}
 void InitList(SqlList &L)
 {
     L.data = (int *)malloc(InitSize * sizeof(int));
@@ -53,9 +77,12 @@ int main()
 {
     SqlList L;
     InitList(L);
-    for (size_t i = 0; i < 20; i++)
+    for (size_t i = 20; i >= 1; i--)
     {
-        add(L, i);
+        add(L, rand() % 100);
     }
+    printList(L);
+    printf("---------------------\n");
+    Del_min01(L);
     printList(L);
 }
