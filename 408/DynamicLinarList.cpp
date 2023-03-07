@@ -73,16 +73,33 @@ void add(SqlList &L, int n)
     L.data[L.length] = n;
     L.length++;
 }
+bool ReverseList(SqlList &L)
+{
+    if (L.length == 0)
+    {
+        printf("表长度为0！");
+        return false;
+    }
+
+    int temp = L.data[0];
+    for (size_t i = 0; i < L.length / 2; i++)
+    {
+        temp = L.data[i];
+        L.data[i] = L.data[L.length - 1 - i];
+        L.data[L.length - 1 - i] = temp;
+    }
+    return true;
+}
 int main()
 {
     SqlList L;
     InitList(L);
-    for (size_t i = 20; i >= 1; i--)
+    for (size_t i = 5; i >= 1; i--)
     {
         add(L, rand() % 100);
     }
     printList(L);
     printf("---------------------\n");
-    Del_min01(L);
+    ReverseList(L);
     printList(L);
 }
