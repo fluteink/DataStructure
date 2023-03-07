@@ -10,7 +10,7 @@ typedef struct
     int Maxsize;
     int length;
 } SqlList;
-int Del_min01(SqlList &L)
+int P17_01Del_min(SqlList &L)
 {
     int min, pos = 0;
     if (L.length == 0)
@@ -73,7 +73,7 @@ void add(SqlList &L, int n)
     L.data[L.length] = n;
     L.length++;
 }
-bool ReverseList(SqlList &L)
+bool P17_02ReverseList(SqlList &L)
 {
     if (L.length == 0)
     {
@@ -90,16 +90,29 @@ bool ReverseList(SqlList &L)
     }
     return true;
 }
+void P17_03Del_x(SqlList &L, int x)
+{
+    int j = 0;
+    for (size_t i = 0; i < L.length; i++)
+    {
+        if (L.data[i] != x)
+        {
+            L.data[j] = L.data[i];
+            j++;
+        }
+    }
+    L.length = j;
+}
 int main()
 {
     SqlList L;
     InitList(L);
-    for (size_t i = 5; i >= 1; i--)
+    for (size_t i = 8; i >= 1; i--)
     {
-        add(L, rand() % 100);
+        add(L, rand() % 6);
     }
     printList(L);
+    P17_03Del_x(L, 4);
     printf("---------------------\n");
-    ReverseList(L);
     printList(L);
 }

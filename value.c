@@ -17,19 +17,19 @@
 // }
 // 代码2
 #include <stdio.h>
-void test()
+void test(int x)
 {
     // static修饰局部变量
     static int i = 0;
     i++;
-    printf("%d ", i);
+    printf("%d ", x);
 }
 int main()
 {
     int i = 0;
     for (i = 0; i < 10; i++)
     {
-        test();
+        test(i);
     }
     return 0;
 }
