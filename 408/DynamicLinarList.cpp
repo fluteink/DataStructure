@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
+#include <algorithm>
 using namespace std;
 #define InitSize 10
 typedef struct
@@ -103,16 +105,37 @@ void P17_03Del_x(SqlList &L, int x)
     }
     L.length = j;
 }
+bool P17_04Del_s_t(SqlList &L, int s, int t)
+{
+    if (L.length == 0 || s >= t)
+    {
+        return false;
+    }
+
+    int i = 0, j = 0;
+    for (; i < L.length && L.data[i] < s; i++)
+        ;
+    for (i = j; j < L.length && L.data[j] <= t; j++)
+        ;
+    for (; j < L.length; i++, j++)
+    {
+        L.data[i] = L.data[j];
+    }
+    L.length = i;
+    return true;
+}
 int main()
 {
+    srand(time(NULL)); // 设置随机数种子为当前时间
     SqlList L;
     InitList(L);
-    for (size_t i = 8; i >= 1; i--)
+    for (size_t i = 22; i >= 1; i--)
     {
-        add(L, rand() % 6);
+        add(L, rand() % 10);
     }
+    sort(L.data, L.data + L.length);
     printList(L);
-    P17_03Del_x(L, 4);
     printf("---------------------\n");
+    P17_04Del_s_t(L, 5, 7);
     printList(L);
 }
