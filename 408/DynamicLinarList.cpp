@@ -399,7 +399,7 @@ int P17_13find_miss_min(int A[], int n)
     memset(B, 0, sizeof(int) * n);
     for (i = 0; i < n; i++)
     {
-        if (A[i] > 0 && A[i] <= n >)
+        if (A[i] > 0 && A[i] <= n)
         {
             B[A[i] - 1] = i;
         }
