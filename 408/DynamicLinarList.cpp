@@ -275,7 +275,7 @@ void P17_10Move_left(int A[], int p, int n)
     // }
     // 时间复杂度O(n),空间复杂度O(n)
 }
-int P27_11Mid_number(int A[], int B[], int n)
+int P17_11Mid_number(int A[], int B[], int n)
 { /*合并为1个数组，然后找中位数*/
     // int i = 0, j = 0, k = 0;
     // int C[2 * n];
@@ -312,21 +312,26 @@ int P27_11Mid_number(int A[], int B[], int n)
     {
         m1 = (s1 + d1) / 2;
         m2 = (s2 + d2) / 2;
-        if (A[m1] == B[m2])
+        if (A[m1] == B[m2]) // 如果A的中位数等于B的中位数，那直接返回
         {
             return A[m1];
         }
-        if (A[m1] < B[m2])
+        if (A[m1] < B[m2]) // 如果A的中位数小于B的中位数，舍去A较小的那一半，B较大的那一半
         {
-            if ((s1 + d1) % 2 == 0)
+            if ((s1 + d1) % 2 == 0) // 如果A 剩下的部分为奇数个，
             {
-                s1 = m1;
-                d2 = m2;
+                s1 = m1; // 保留中间点
+                d2 = m2; // 保留中间点
             }
-            else
+            else // 如果剩下的部分为偶数个，
             {
-                s1 = m1 + 1;
-                d2 = m2;
+                s1 = m1 + 1; // A舍去中间点
+                d2 = m2;     // B保留中间点
+                /*？？？
+                保证数量一致
+                因为A中间点已经没有资格当整体中间点了，
+                不去掉下一轮比较会把它带上一起比较，
+                比较出来就不是整体的中间点了。*/
             }
         }
         else
@@ -345,33 +350,65 @@ int P27_11Mid_number(int A[], int B[], int n)
     }
     return A[s1] < B[s2] ? A[s1] : B[s2];
 }
+int P17_12Main_element(int A[], int n)
+{
+    int i, c, count = 1;
+    c = A[0];
+    for (i = 1; i < n; i++)
+    {
+        if (c == A[i])
+            count++;
+        else
+        {
+            if (count > 0)
+            {
+                count--;
+            }
+            else
+            {
+                c = A[i];
+                count = 1;
+            }
+        }
+    }
+    if (count > 0)
+    {
+        count = 0;
+        for (size_t i = 0; i < n; i++)
+        {
+            if (A[i] == c)
+            {
+                count++;
+            }
+        }
+    }
+    if (count > n / 2)
+    {
+        return c;
+    }
+    else
+    {
+        return -1;
+    };
+}
 int main()
 {
     srand(time(NULL)); // 设置随机数种子为当前时间
     SqlList L;
     InitList(L);
-    int A[20];
-    int B[20];
-    for (size_t i = 0; i < 10; i++)
+    int length = 8;
+    int A[length];
+    for (size_t i = 0; i < length; i++)
     {
-        A[i] = rand() % 100;
+        int temp;
+        scanf("%d", &temp);
+        A[i] = temp;
     }
-    for (size_t i = 0; i < 10; i++)
-    {
-        B[i] = rand() % 100;
-    }
-    sort(A, A + 10);
-    sort(B, B + 10);
-    for (size_t i = 0; i < 10; i++)
-    {
-        printf("%d\n", A[i]);
-    }
-    printf("---------------------\n");
 
-    for (size_t i = 0; i < 10; i++)
-    {
-        printf("%d\n", B[i]);
-    }
+    // for (size_t i = 0; i < 10; i++)
+    // {
+    //     printf("%d\n", A[i]);
+    // }
+
     printf("---------------------\n");
-    printf("%d", P27_11Mid_number(A, B, 10));
 }
