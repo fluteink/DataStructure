@@ -391,12 +391,41 @@ int P17_12Main_element(int A[], int n)
         return -1;
     };
 }
+int P17_13find_miss_min(int A[], int n)
+{
+    int min, max;
+    min = max = A[0];
+    for (size_t i = 1; i < n; i++)
+    {
+        if (A[i] < min && A[i] > 0)
+        {
+            min = A[i];
+        }
+        if (A[i] > max)
+        {
+            max = A[i];
+        }
+    }
+    if (min == 1)
+    {
+        return max + 1;
+    }
+    else if (min > 0)
+    {
+        return 1;
+    }
+    else if (max < 0)
+    {
+        return 1;
+    }
+    return 1;
+}
 int main()
 {
     srand(time(NULL)); // 设置随机数种子为当前时间
     SqlList L;
     InitList(L);
-    int length = 8;
+    int length = 3;
     int A[length];
     for (size_t i = 0; i < length; i++)
     {
@@ -411,4 +440,5 @@ int main()
     // }
 
     printf("---------------------\n");
+    printf("%d\n", P17_13find_miss_min(A, length));
 }
