@@ -142,18 +142,37 @@ bool P17_05Del_s_t(SqlList &L, int s, int t)
     L.length = j;
     return true;
 }
+void P17_06Del_same(SqlList &L)
+{
+    if (L.length == 0)
+    {
+        return;
+    }
+    int i, j;
+    for (i = 0, j = 1; j < L.length; j++)
+    {
+        if (L.data[i] != L.data[j])
+        {
+            L.data[++i] = L.data[j];
+        }
+    }
+    L.length = i + 1;
+}
 int main()
 {
     srand(time(NULL)); // 设置随机数种子为当前时间
     SqlList L;
     InitList(L);
-    for (size_t i = 22; i >= 1; i--)
+    for (size_t i = 10; i >= 1; i--)
     {
-        add(L, rand() % 10);
+        int input = 0;
+        scanf("%d", &input);
+        add(L, input);
+        // add(L, rand() % 10);
     }
-    // sort(L.data, L.data + L.length);
+    sort(L.data, L.data + L.length);
     printList(L);
     printf("---------------------\n");
-    P17_05Del_s_t(L, 5, 7);
+    P17_06Del_same(L);
     printList(L);
 }
