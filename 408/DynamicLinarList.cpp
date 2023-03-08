@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <string.h>
 using namespace std;
 #define InitSize 100
 typedef struct
@@ -393,32 +394,24 @@ int P17_12Main_element(int A[], int n)
 }
 int P17_13find_miss_min(int A[], int n)
 {
-    int min, max;
-    min = max = A[0];
-    for (size_t i = 1; i < n; i++)
+    int i, *B;
+    B = (int *)malloc(sizeof(int) * n);
+    memset(B, 0, sizeof(int) * n);
+    for (i = 0; i < n; i++)
     {
-        if (A[i] < min && A[i] > 0)
+        if (A[i] > 0 && A[i] <= n >)
         {
-            min = A[i];
-        }
-        if (A[i] > max)
-        {
-            max = A[i];
+            B[A[i] - 1] = i;
         }
     }
-    if (min == 1)
+    for (i = 0; i < n; i++)
     {
-        return max + 1;
+        if (B[i] == 0)
+        {
+            break;
+        }
+        return i + 1;
     }
-    else if (min > 0)
-    {
-        return 1;
-    }
-    else if (max < 0)
-    {
-        return 1;
-    }
-    return 1;
 }
 int main()
 {
