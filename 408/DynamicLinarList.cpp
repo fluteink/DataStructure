@@ -256,7 +256,7 @@ void P17_10Move_left(int A[], int p, int n)
 {
     P17_10Reverse(A, 0, p - 1);
     P17_10Reverse(A, p, n - 1);
-    P17_10Reverse(A, 0, n - 1);
+    P17_10Reverse(A, 0, n - 1); // 时间复杂度O(n),空间复杂度O(1)
     // int B[n];
     // int j = p, i;
     // if (p <= 0 || p >= n)
@@ -275,33 +275,103 @@ void P17_10Move_left(int A[], int p, int n)
     // }
     // 时间复杂度O(n),空间复杂度O(n)
 }
+int P27_11Mid_number(int A[], int B[], int n)
+{ /*合并为1个数组，然后找中位数*/
+    // int i = 0, j = 0, k = 0;
+    // int C[2 * n];
+    // while (i < n && j < n)
+    // {
+    //     if (A[i] <= B[j])
+    //     {
+    //         C[k++] = A[i++];
+    //     }
+    //     else
+    //     {
+    //         C[k++] = B[j++];
+    //     }
+    // }
+    // while (j < n)
+    // {
+    //     C[k++] = B[j++];
+    // }
+    // while (i < n)
+    // {
+    //     C[k++] = A[i++];
+    // }
+    // for (size_t i = 0; i < 2 * n; i++)
+    // {
+    //     printf("%d\n", C[i]);
+    // }
+    // printf("---------------------\n");
+
+    // return C[n];
+    /*分别找到AB的中位数，然后判断a>b,a=b,a<b三种情况，
+    然后再细分，直到最后一个数就是所要求的*/
+    int s1 = 0, d1 = n - 1, m1, s2 = 0, d2 = n - 1, m2;
+    while (s1 != d1 || s2 != d2)
+    {
+        m1 = (s1 + d1) / 2;
+        m2 = (s2 + d2) / 2;
+        if (A[m1] == B[m2])
+        {
+            return A[m1];
+        }
+        if (A[m1] < B[m2])
+        {
+            if ((s1 + d1) % 2 == 0)
+            {
+                s1 = m1;
+                d2 = m2;
+            }
+            else
+            {
+                s1 = m1 + 1;
+                d2 = m2;
+            }
+        }
+        else
+        {
+            if ((s2 + d2) % 2 == 0)
+            {
+                d1 = m1;
+                s2 = m2;
+            }
+            else
+            {
+                d1 = m1;
+                s2 = m2 + 1;
+            }
+        }
+    }
+    return A[s1] < B[s2] ? A[s1] : B[s2];
+}
 int main()
 {
     srand(time(NULL)); // 设置随机数种子为当前时间
     SqlList L;
     InitList(L);
     int A[20];
-    for (size_t i = 20; i >= 1; i--)
+    int B[20];
+    for (size_t i = 0; i < 10; i++)
     {
         A[i] = rand() % 100;
-        // int input = 0;
-        // scanf("%d", &input);
-        // add(L, input);
-        // add(L, rand() % 10);
     }
-    // sort(A, A + 20);
-    for (size_t i = 0; i < 20; i++)
+    for (size_t i = 0; i < 10; i++)
+    {
+        B[i] = rand() % 100;
+    }
+    sort(A, A + 10);
+    sort(B, B + 10);
+    for (size_t i = 0; i < 10; i++)
     {
         printf("%d\n", A[i]);
     }
-    int input = 0;
-    scanf("%d", &input);
-    P17_10Move_left(A, input, 20);
     printf("---------------------\n");
 
-    // printList(L3);
-    for (size_t i = 0; i < 20; i++)
+    for (size_t i = 0; i < 10; i++)
     {
-        printf("%d\n ", A[i]);
+        printf("%d\n", B[i]);
     }
+    printf("---------------------\n");
+    printf("%d", P27_11Mid_number(A, B, 10));
 }
