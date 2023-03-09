@@ -14,6 +14,15 @@ typedef struct LNode
     ElemType data;
     struct LNode *next;
 } LNode, *LinkList;
+void printList(LinkList &L)
+{
+    LNode *p = L->next;
+    while (p != NULL)
+    {
+        printf("%d\n", p->data);
+        p = p->next;
+    }
+}
 bool InitList(LinkList &L)
 {
     L = (LNode *)malloc(sizeof(LNode));
@@ -52,5 +61,10 @@ int main()
 {
     LinkList L;
     InitList(L);
+    for (size_t i = 1; i <= 5; i++)
+    {
+        ListInsert(L, i, i);
+    }
+    printList(L);
     return 0;
 }
