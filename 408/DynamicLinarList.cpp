@@ -5,6 +5,7 @@
 #include <ctime>
 #include <algorithm>
 #include <string.h>
+#include <cmath>
 using namespace std;
 #define InitSize 100
 typedef struct
@@ -13,6 +14,14 @@ typedef struct
     int Maxsize;
     int length;
 } SqlList;
+void printArray(int A[], int n)
+{
+    for (size_t i = 0; i < n; i++)
+    {
+        printf("%d\n", A[i]);
+    }
+    printf("---------------------\n");
+}
 int P17_01Del_min(SqlList &L)
 {
     int min, pos = 0;
@@ -412,6 +421,36 @@ int P17_13find_miss_min(int A[], int n)
         }
         return i + 1;
     }
+    return -1;
+}
+bool P17_14xls_min(int a, int b, int c)
+{
+    if (a <= b && a <= c)
+    {
+        return true;
+    }
+    return false;
+}
+int P17_14findMinofTrip(int A[], int n, int B[], int m, int C[], int p)
+{
+    int i = 0, j = 0, k = 0, D_min = 0x7fffffff, D;
+    while (i < n && j < m && k < p && D_min > 0)
+    {
+        D = abs(A[i] - B[j]) + abs(B[j] - C[k]) + abs(A[i] - C[k]);
+        if (D < D_min)
+        {
+            D_min = D;
+        }
+        if (P17_14xls_min(A[i], B[j], C[k]))
+            i++;
+        else if (P17_14xls_min(B[j], A[i], C[k]))
+            j++;
+        else
+        {
+            k++;
+        }
+    }
+    return D_min;
 }
 int main()
 {
@@ -420,18 +459,32 @@ int main()
     InitList(L);
     int length = 3;
     int A[length];
+    int B[length + 1];
+    int C[length + 2];
     for (size_t i = 0; i < length; i++)
     {
         int temp;
+        temp = rand() % 100;
         scanf("%d", &temp);
         A[i] = temp;
     }
+    for (size_t i = 0; i < length + 1; i++)
+    {
+        int temp;
+        temp = rand() % 100;
+        scanf("%d", &temp);
+        B[i] = temp;
+    }
+    for (size_t i = 0; i < length + 2; i++)
+    {
+        int temp;
+        temp = rand() % 100;
+        scanf("%d", &temp);
+        C[i] = temp;
+    }
+    printArray(A, length);
+    printArray(B, length + 1);
+    printArray(C, length + 2);
 
-    // for (size_t i = 0; i < 10; i++)
-    // {
-    //     printf("%d\n", A[i]);
-    // }
-
-    printf("---------------------\n");
-    printf("%d\n", P17_13find_miss_min(A, length));
+    printf("%d\n", P17_14findMinofTrip(A, length, B, length + 1, C, length + 2));
 }
