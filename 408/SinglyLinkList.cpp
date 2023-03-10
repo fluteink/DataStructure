@@ -176,7 +176,30 @@ LinkList List_HeadInsert(LinkList &L) // 逆向建立单链表，尾插初始化
     }
     return L;
 }
+LinkList Reverse(LinkList &L)
+{
+    LinkList L2;
+    InitList(L2);
+    if (Length(L) == 1 && Length(L) == 0)
+    {
+        L->next = GetElem(L, Length(L));
+    }
+    else
+    {
+        int i = Length(L);
 
+        LNode *p = L2;
+        while (i > 0)
+        {
+            p->next = GetElem(L, i);
+            p = p->next;
+            i--;
+        }
+        p->next = NULL;
+    }
+    L = L2;
+    return L;
+}
 int main()
 {
 
@@ -185,12 +208,13 @@ int main()
     LinkList L;
     InitList(L);
     ElemType e;
-    // for (size_t i = 1; i <= 0; i++)
-    // {
-    //     ListInsert(L, i, rand());
-    // }
-    List_HeadInsert(L);
+    for (size_t i = 1; i <= 5; i++)
+    {
+        ListInsert(L, i, rand());
+    }
     printList(L);
     printf("%d\n", Length(L));
+    Reverse(L);
+    printList(L);
     return 0;
 }
