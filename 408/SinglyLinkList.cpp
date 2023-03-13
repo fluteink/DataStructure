@@ -55,10 +55,10 @@ void printList(LinkList &L)
     LNode *p = L->next;
     while (p != NULL)
     {
-        printf("%d\n", p->data);
+        printf("%d,", p->data);
         p = p->next;
     }
-    printf("------------------------------\n");
+    printf("\n------------------------------\n");
 }
 bool InitList(LinkList &L)
 {
@@ -200,6 +200,34 @@ LinkList Reverse(LinkList &L)
     L = L2;
     return L;
 }
+// 删除值为x的节点
+bool delete_x(LinkList &L, int x) // p38_2
+{
+    LNode *p;
+    if (L->next == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        p = L;
+        while (p->next != NULL) // 直到最后一个节点
+        {
+
+            if (p->next->data == x) // 找到x并删除
+            {
+                LNode *q = p->next;
+                p->next = q->next;
+                free(q);
+            }
+            else
+            {
+                p = p->next;
+            }
+        }
+    }
+    return true;
+}
 int main()
 {
 
@@ -208,13 +236,14 @@ int main()
     LinkList L;
     InitList(L);
     ElemType e;
-    for (size_t i = 1; i <= 5; i++)
-    {
-        ListInsert(L, i, rand());
-    }
+    // for (size_t i = 1; i <= 5; i++)
+    // {
+    //     ListInsert(L, i, rand());
+    // }
+    List_TailInsert(L);
     printList(L);
     printf("%d\n", Length(L));
-    Reverse(L);
+    delete_x(L, 2);
     printList(L);
     return 0;
 }

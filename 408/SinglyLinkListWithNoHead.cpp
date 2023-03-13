@@ -161,7 +161,7 @@ void printList(SLNode **head)
     }
     printf("\n--------------------------\n");
 }
-// 删除值为x的节点
+// 删除值为x的节点P38_01
 void delete_x(LinkList &L, int x)
 {
     SLNode *p;
