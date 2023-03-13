@@ -200,7 +200,7 @@ LinkList Reverse(LinkList &L)
     L = L2;
     return L;
 }
-// 删除值为x的节点
+// 删除值为x的节点p38_2
 bool delete_x(LinkList &L, int x) // p38_2
 {
     LNode *p;
