@@ -245,6 +245,31 @@ void reversePrint(LinkList &L, LinkList &L1) // p38_3忽略头结点
         }
     }
 }
+void delete_min(LinkList &L) // p38_4删除最小值
+{
+    if (L->next == NULL)
+    {
+        return;
+    }
+    int min = L->next->data;
+    LNode *p = L->next, *q = L;
+    while (p != NULL)
+    {
+        if (p->data < min)
+        {
+            min = p->data;
+        }
+        p = p->next;
+    }
+    p = L->next;
+    while (p->data != min)
+    {
+        q = q->next;
+        p = p->next;
+    }
+    q->next = p->next;
+    free(p);
+}
 int main()
 {
 
@@ -253,14 +278,14 @@ int main()
     LinkList L;
     InitList(L);
     ElemType e;
-    for (size_t i = 1; i <= 5; i++)
+    for (size_t i = 1; i <= 9; i++)
     {
         ListInsert(L, i, rand());
     }
     // List_TailInsert(L);
     printList(L);
     // printf("%d\n", Length(L));
-    reversePrint(L, L);
+    delete_min(L);
     printList(L);
     return 0;
 }
