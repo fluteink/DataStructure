@@ -245,6 +245,7 @@ void reversePrint(LinkList &L, LinkList &L1) // p38_3忽略头结点
         }
     }
 }
+// 删除最小值
 void delete_min(LinkList &L) // p38_4删除最小值
 {
     if (L->next == NULL)
