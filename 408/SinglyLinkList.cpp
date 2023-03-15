@@ -228,6 +228,23 @@ bool delete_x(LinkList &L, int x) // p38_2
     }
     return true;
 }
+// 从尾到头反向输出
+void reversePrint(LinkList &L, LinkList &L1) // p38_3忽略头结点
+{
+    if (L->next == NULL)
+    {
+        printf("%d\n", L->data);
+        return;
+    }
+    else
+    {
+        reversePrint(L->next, L1);
+        if (L != L1)
+        {
+            printf("%d\n", L->data);
+        }
+    }
+}
 int main()
 {
 
@@ -236,14 +253,14 @@ int main()
     LinkList L;
     InitList(L);
     ElemType e;
-    // for (size_t i = 1; i <= 5; i++)
-    // {
-    //     ListInsert(L, i, rand());
-    // }
-    List_TailInsert(L);
+    for (size_t i = 1; i <= 5; i++)
+    {
+        ListInsert(L, i, rand());
+    }
+    // List_TailInsert(L);
     printList(L);
-    printf("%d\n", Length(L));
-    delete_x(L, 2);
+    // printf("%d\n", Length(L));
+    reversePrint(L, L);
     printList(L);
     return 0;
 }
