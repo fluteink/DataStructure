@@ -271,6 +271,41 @@ void delete_min(LinkList &L) // p38_4删除最小值
     q->next = p->next;
     free(p);
 }
+// 原地翻转,头插法
+void reverseO1(LinkList &L) // p38_5原地翻转,头插法
+{
+    LNode *p, *r;
+    p = L->next;
+    L->next = NULL;
+    while (p != NULL)
+    {
+        r = p->next;
+        p->next = L->next;
+        L->next = p;
+        p = r;
+    }
+    return;
+}
+// 插入排序思想
+void sort(LinkList &L) // p38_6排序递增有序
+{
+    LNode *p = L->next, *pre;
+    LNode *r = p->next;
+    p->next = NULL;
+    p = r;
+    while (p != NULL)
+    {
+        r = p->next;
+        pre = L;
+        while (pre->next != NULL && pre->next->data < p->data)
+        {
+            pre = pre->next;
+        }
+        p->next = pre->next;
+        pre->next = p;
+        p = r;
+    }
+}
 int main()
 {
 
@@ -281,12 +316,12 @@ int main()
     ElemType e;
     for (size_t i = 1; i <= 9; i++)
     {
-        ListInsert(L, i, rand());
+        ListInsert(L, i, rand() % 100);
     }
     // List_TailInsert(L);
     printList(L);
     // printf("%d\n", Length(L));
-    delete_min(L);
+    sort(L);
     printList(L);
     return 0;
 }
