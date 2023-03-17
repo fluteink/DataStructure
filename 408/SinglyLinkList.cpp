@@ -52,6 +52,12 @@ int Length(LinkList &L) // 求表长
 }
 void printList(LinkList &L)
 {
+    if (L == NULL)
+    {
+        printf("NULL\n");
+        printf("\n------------------------------\n");
+        return;
+    }
     LNode *p = L->next;
     while (p != NULL)
     {
@@ -306,22 +312,92 @@ void sort(LinkList &L) // p38_6排序递增有序
         p = r;
     }
 }
+// 删除介于mn之间的数
+void del_between(LinkList &L, int m, int n) // p38_7
+{
+    LNode *p = L->next, *pre = L, *temp;
+    while (p != NULL && pre != NULL)
+    {
+        if (p->data < n && p->data > m)
+        {
+            temp = p;
+            pre->next = p->next;
+            p = p->next;
+            free(temp);
+        }
+        else
+        {
+            pre = pre->next;
+            p = p->next;
+        }
+    }
+}
+LinkList Search_1st_Common(LinkList &L1, LinkList &L2)
+{
+    int dist;
+    int len1 = Length(L1), len2 = Length(L2);
+    LinkList longList, shortList;
+    if (len1 > len2)
+    {
+        longList = L1->next;
+        shortList = L2->next;
+        dist = len1 - len2;
+    }
+    else
+    {
+        longList = L2->next;
+        shortList = L1->next;
+        dist = len2 - len1;
+    }
+    while (dist--)
+    {
+        longList = longList->next;
+    }
+    while (longList != NULL)
+    {
+        if (longList == shortList)
+        {
+            return longList;
+        }
+        else
+        {
+            longList = longList->next;
+            shortList = shortList->next;
+        }
+    }
+    return NULL;
+}
+
 int main()
 {
 
     srand(time(NULL)); // 设置随机数种子为当前时间
-
+    int k;
     LinkList L;
     InitList(L);
+    LinkList L2;
+    InitList(L2);
     ElemType e;
-    for (size_t i = 1; i <= 9; i++)
+    for (size_t i = 1; i <= 10; i++)
     {
-        ListInsert(L, i, rand() % 100);
+        // scanf("%d", &k);
+        ListInsert(L, i, rand());
     }
+    for (size_t i = 1; i <= 2; i++)
+    {
+        // scanf("%d", &k);
+        ListInsert(L2, i, rand());
+    }
+    L2->next->next->next = L->next->next;
     // List_TailInsert(L);
     printList(L);
-    // printf("%d\n", Length(L));
-    sort(L);
+    printList(L2);
+    printf("%d\n", Length(L));
+    printf("%d\n", Length(L2));
+    // sort(L);
+    LinkList L3 = Search_1st_Common(L, L2);
     printList(L);
+    printList(L2);
+    printList(L3);
     return 0;
 }
