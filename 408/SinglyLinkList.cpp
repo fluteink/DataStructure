@@ -389,7 +389,34 @@ void Min_Del(LinkList &head) // p38-9
     }
     free(head);
 }
-
+// 奇元素存入A偶元素存入B
+LinkList DisCreat_1(LinkList &A) // p38-10
+{
+    int i = 0;
+    LinkList B = (LinkList)malloc(sizeof(LNode));
+    B->next = NULL; // 初始化B
+    LNode *ra = A, *rb = B, *p;
+    p = A->next;
+    A->next = NULL;
+    while (p != NULL)
+    {
+        i++;
+        if (i % 2 == 0)
+        {
+            rb->next = p;
+            rb = p;
+        }
+        else
+        {
+            ra->next = p;
+            ra = p;
+        }
+        p = p->next;
+    }
+    ra->next = NULL;
+    rb->next = NULL;
+    return B;
+}
 int main()
 {
 
@@ -404,7 +431,8 @@ int main()
         ListInsert(L, i, rand());
     }
     printList(L);
-    Min_Del(L);
+    LinkList B = DisCreat_1(L);
     printList(L);
+    printList(B);
     return 0;
 }
