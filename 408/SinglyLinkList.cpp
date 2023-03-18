@@ -332,7 +332,8 @@ void del_between(LinkList &L, int m, int n) // p38_7
         }
     }
 }
-LinkList Search_1st_Common(LinkList &L1, LinkList &L2)
+// 给两个链表，找到他们的公共结点
+LinkList Search_1st_Common(LinkList &L1, LinkList &L2) // P38_8
 {
     int dist;
     int len1 = Length(L1), len2 = Length(L2);
@@ -367,6 +368,27 @@ LinkList Search_1st_Common(LinkList &L1, LinkList &L2)
     }
     return NULL;
 }
+// 依次删除最小的元素
+void Min_Del(LinkList &head) // p38-9
+{
+    while (head->next != NULL)
+    {
+        LNode *pre = head, *p = pre->next, *u; // pre要删除节点前驱，u删除节点的指针，p负责循环,也是前驱指针
+        while (p->next != NULL)
+        {
+            if (p->next->data < pre->next->data)
+            {
+                pre = p;
+            }
+            p = p->next;
+        }
+        printf("删除%d\n", pre->next->data);
+        u = pre->next;
+        pre->next = u->next;
+        free(u);
+    }
+    free(head);
+}
 
 int main()
 {
@@ -375,29 +397,14 @@ int main()
     int k;
     LinkList L;
     InitList(L);
-    LinkList L2;
-    InitList(L2);
     ElemType e;
     for (size_t i = 1; i <= 10; i++)
     {
         // scanf("%d", &k);
         ListInsert(L, i, rand());
     }
-    for (size_t i = 1; i <= 2; i++)
-    {
-        // scanf("%d", &k);
-        ListInsert(L2, i, rand());
-    }
-    L2->next->next->next = L->next->next;
-    // List_TailInsert(L);
     printList(L);
-    printList(L2);
-    printf("%d\n", Length(L));
-    printf("%d\n", Length(L2));
-    // sort(L);
-    LinkList L3 = Search_1st_Common(L, L2);
+    Min_Del(L);
     printList(L);
-    printList(L2);
-    printList(L3);
     return 0;
 }
