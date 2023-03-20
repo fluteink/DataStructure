@@ -11,4 +11,4 @@ add_executable(vscode
         408/DynamicLinarList.cpp
         408/linarlist.cpp
         408/SinglyLinkList.cpp
-        408/SinglyLinkListWithNoHead.cpp 1/Main.cpp)
+        408/SinglyLinkListWithNoHead.cpp Main.cpp)
