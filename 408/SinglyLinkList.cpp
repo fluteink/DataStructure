@@ -441,22 +441,41 @@ LinkList DisCreat_2(LinkList &A) // p38-11
     }
     return B;
 }
+// 删除相同元素（有序）
+void del_same(LinkList &L) // p38-12
+{
+    LNode *p = L->next, *r = L;
+    while (p->next != NULL)
+    {
+        if (r->next->data == p->next->data)
+        {
+            r->next = p->next;
+            p = p->next;
+        }
+        else
+        {
+            p = p->next;
+            r = r->next;
+        }
+    }
+}
 int main()
 {
 
-    srand(time(NULL)); // 设置随机数种子为当前时间
-    int k;
-    LinkList L;
-    InitList(L);
-    ElemType e;
-    for (size_t i = 1; i <= 9; i++)
-    {
-        // scanf("%d", &k);
-        ListInsert(L, i, rand());
-    }
-    printList(L);
-    LinkList B = DisCreat_1(L);
-    printList(L);
-    printList(B);
+        srand(time(NULL)); // 设置随机数种子为当前时间
+        int k;
+        LinkList L;
+        InitList(L);
+        ElemType e;
+        for (size_t i = 1; i <= 10; i++)
+        {
+            scanf("%d", &k);
+            ListInsert(L, i, k);
+        }
+        sort(L);
+        printList(L);
+        del_same(L);
+        printList(L);
+    
     return 0;
 }
