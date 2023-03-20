@@ -240,7 +240,7 @@ public:
     }
 };
 
-int main()
+int test()
 {
     Double_List tmp;
     Double_List *list;

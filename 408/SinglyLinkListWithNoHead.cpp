@@ -184,7 +184,7 @@ void delete_x(LinkList &L, int x)
         }
     }
 }
-int main()
+int test()
 {
     SLNode *head;
     int i, x;

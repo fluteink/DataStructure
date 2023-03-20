@@ -417,7 +417,7 @@ LinkList DisCreat_1(LinkList &A) // p38-10
     rb->next = NULL;
     return B;
 }
-int main()
+int test()
 {
 
     srand(time(NULL)); // 设置随机数种子为当前时间

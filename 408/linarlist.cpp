@@ -31,7 +31,7 @@ void printList(SqlList &L)
         // printf("&L.data[%d]=%p\n", i, &L.data[i]);
     }
 }
-int main()
+int test()
 {
     SqlList L;
     InitList(L);

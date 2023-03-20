@@ -452,7 +452,7 @@ int P17_14findMinofTrip(int A[], int n, int B[], int m, int C[], int p)
     }
     return D_min;
 }
-int main()
+int test()
 {
     srand(time(NULL)); // 设置随机数种子为当前时间
     SqlList L;
