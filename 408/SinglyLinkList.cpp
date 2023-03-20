@@ -417,6 +417,30 @@ LinkList DisCreat_1(LinkList &A) // p38-10
     rb->next = NULL;
     return B;
 }
+// 拆成两个链表
+LinkList DisCreat_2(LinkList &A) // p38-11
+{
+    LinkList B = (LinkList)malloc(sizeof(LNode));
+    B->next = NULL;
+    LNode *p = A->next, *r = A, *b = B; // p指向当前循环A的位置，r前一个位置，b=B表尾
+    int i = 0;
+    while (p != NULL)
+    {
+        if (++i % 2 == 1)
+        {
+            r = r->next;
+            p = p->next;
+        }
+        else
+        {
+            r->next = p->next;
+            p->next = b->next;
+            b->next = p;
+            p = r->next;
+        }
+    }
+    return B;
+}
 int main()
 {
 
@@ -425,7 +449,7 @@ int main()
     LinkList L;
     InitList(L);
     ElemType e;
-    for (size_t i = 1; i <= 10; i++)
+    for (size_t i = 1; i <= 9; i++)
     {
         // scanf("%d", &k);
         ListInsert(L, i, rand());
