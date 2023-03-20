@@ -11,7 +11,7 @@
 // add.c
 static int g_val = 2018;
 // test.c
-int main()
+int test()
 {
     printf("%d\n", g_val);
     return 0;
