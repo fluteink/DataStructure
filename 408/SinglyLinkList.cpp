@@ -459,23 +459,79 @@ void del_same(LinkList &L) // p38-12
         }
     }
 }
+// 合并两个递增排序的链表，合并为递减的一个链表，并且用原来的节点
+LinkList merge1(LinkList &L1, LinkList &L2) // p38-13
+{
+    LinkList L3 = (LNode *)malloc(sizeof(LNode));
+    L3->next = NULL;
+    LNode *p1 = L1->next, *p2 = L2->next, *p3, *r, *w;
+    while (L1->next != NULL && L2->next != NULL)
+    {
+
+        if (p1->data < p2->data) // p1比p2小
+        {
+            w = p1->next;
+            r = L3->next;
+            L3->next = p1;
+            p1->next = r;
+            L1->next = w;
+            /* code */
+        }
+        else
+        {
+            w = p2->next;
+            r = L3->next;
+            L3->next = p2;
+            p2->next = r;
+            L2->next = w;
+        }
+        p1 = L1->next;
+        p2 = L2->next;
+    }
+    while (L1->next != NULL)
+    {
+        w = L1->next;       // w暂存L1的下一个节点
+        L1->next = w->next; // 更新L1
+        r = L3->next;       // r暂存L3的下一个节点
+        L3->next = w;
+        w->next = r;
+    }
+    while (L2->next != NULL)
+    {
+        w = L2->next;       // w暂存L1的下一个节点
+        L2->next = w->next; // 更新L1
+        r = L3->next;       // r暂存L3的下一个节点
+        L3->next = w;
+        w->next = r;
+    }
+    return L3;
+}
 int main()
 {
 
-        srand(time(NULL)); // 设置随机数种子为当前时间
-        int k;
-        LinkList L;
-        InitList(L);
-        ElemType e;
-        for (size_t i = 1; i <= 10; i++)
-        {
-            scanf("%d", &k);
-            ListInsert(L, i, k);
-        }
-        sort(L);
-        printList(L);
-        del_same(L);
-        printList(L);
-    
+    srand(time(NULL)); // 设置随机数种子为当前时间
+    int k;
+    LinkList L;
+    InitList(L);
+    LinkList L2;
+    InitList(L2);
+    ElemType e;
+    for (size_t i = 1; i <= 10; i++)
+    {
+        // scanf("%d", &k);
+        ListInsert(L, i, rand() % 30);
+    }
+    sort(L);
+    for (size_t i = 1; i <= 10; i++)
+    {
+        // scanf("%d", &k);
+        ListInsert(L2, i, rand() % 30);
+    }
+    sort(L2);
+    printList(L);
+    printList(L2);
+    LinkList L4 = merge1(L, L2);
+    printList(L4);
+
     return 0;
 }
