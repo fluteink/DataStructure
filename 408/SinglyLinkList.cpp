@@ -460,7 +460,7 @@ void del_same(LinkList &L) // p38-12
     }
 }
 // 合并两个递增排序的链表，合并为递减的一个链表，并且用原来的节点
-LinkList merge1(LinkList &L1, LinkList &L2) // p38-13
+LinkList merge1(LinkList &L1, LinkList &L2) // p39-13
 {
     LinkList L3 = (LNode *)malloc(sizeof(LNode));
     L3->next = NULL;
@@ -506,6 +506,31 @@ LinkList merge1(LinkList &L1, LinkList &L2) // p38-13
     }
     return L3;
 }
+// 输入有序链表，找到相同元素并添加到新的链表中
+LinkList GetCommon(LinkList A, LinkList B) // p39-14
+{
+    LNode *p = A->next, *q = B->next, *r, *s;
+    LinkList C = (LinkList)malloc(sizeof(LNode));
+    r = C;
+    while (p != NULL && q != NULL)
+    {
+        if (p->data < q->data)
+            p = p->next;
+        else if (p->data > q->data)
+            q = p->next;
+        else
+        {
+            s = (LNode *)malloc(sizeof(LNode));
+            s->data = p->data;
+            r->next = s;
+            r = s;
+            p = p->next;
+            q = p->next;
+        }
+    }
+    r->next = NULL;
+    return C;
+}
 int main()
 {
 
@@ -519,18 +544,18 @@ int main()
     for (size_t i = 1; i <= 10; i++)
     {
         // scanf("%d", &k);
-        ListInsert(L, i, rand() % 30);
+        ListInsert(L, i, rand() % 5);
     }
     sort(L);
     for (size_t i = 1; i <= 7; i++)
     {
         // scanf("%d", &k);
-        ListInsert(L2, i, rand() % 30);
+        ListInsert(L2, i, rand() % 5);
     }
     sort(L2);
     printList(L);
     printList(L2);
-    LinkList L4 = merge1(L, L2);
+    LinkList L4 = GetCommon(L, L2);
     printList(L4);
 
     return 0;
