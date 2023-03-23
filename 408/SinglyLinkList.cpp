@@ -522,7 +522,7 @@ int main()
         ListInsert(L, i, rand() % 30);
     }
     sort(L);
-    for (size_t i = 1; i <= 10; i++)
+    for (size_t i = 1; i <= 7; i++)
     {
         // scanf("%d", &k);
         ListInsert(L2, i, rand() % 30);
