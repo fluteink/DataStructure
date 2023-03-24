@@ -531,6 +531,76 @@ LinkList GetCommon(LinkList A, LinkList B) // p39-14
     r->next = NULL;
     return C;
 }
+// 求A与B的交集，AB元素递增
+void Union(LinkList &La, LinkList &Lb) // p39-15
+{
+    LNode *pa = La->next, *pb = Lb->next, *pc = La, *r;
+    while (pa != NULL && pb != NULL)
+    {
+        if (pa->data == pb->data)
+        {
+            pc->next = pa;
+            pc = pa;
+            pa = pa->next;
+            r = pb;
+            pb = pb->next;
+            free(r);
+        }
+        else if (pa->data < pb->data)
+        {
+            r = pa;
+            pa = pa->next;
+            free(r);
+        }
+        else
+        {
+            r = pb;
+            pb = pb->next;
+            free(r);
+        }
+    }
+    while (pa != NULL)
+    {
+        r = pa;
+        pa = pa->next;
+        free(r);
+    }
+    while (pb != NULL)
+    {
+        r = pb;
+        pb = pb->next;
+        free(r);
+    }
+    pc->next = NULL;
+    free(Lb);
+}
+// 判断b是否为a的连续子序列
+int Pattern(LinkList &a, LinkList &b) // p39-5
+{
+    LNode *pa = a->next, *pb = b->next, *pre = pa;
+    while (pa != NULL && pb != NULL)
+    {
+        if (pa->data == pb->data)
+        {
+            pa = pa->next;
+            pb = pb->next;
+        }
+        else
+        {
+            pre = pre->next;
+            pa = pre;
+            pb = b;
+        }
+    }
+    if (pb == NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
 int main()
 {
 
@@ -543,20 +613,20 @@ int main()
     ElemType e;
     for (size_t i = 1; i <= 10; i++)
     {
-        // scanf("%d", &k);
-        ListInsert(L, i, rand() % 5);
+        scanf("%d", &k);
+        ListInsert(L, i, k);
+        // ListInsert(L, i, rand() % 10);
     }
-    sort(L);
-    for (size_t i = 1; i <= 7; i++)
+    // sort(L);
+    for (size_t i = 1; i <= 5; i++)
     {
-        // scanf("%d", &k);
-        ListInsert(L2, i, rand() % 5);
+        scanf("%d", &k);
+        ListInsert(L2, i, k);
+        // ListInsert(L2, i, rand() % 5);
     }
-    sort(L2);
+    // sort(L2);
     printList(L);
     printList(L2);
-    LinkList L4 = GetCommon(L, L2);
-    printList(L4);
-
+    printf("%d\n", Pattern(L, L2));
     return 0;
 }
