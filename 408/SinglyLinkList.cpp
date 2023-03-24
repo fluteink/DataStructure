@@ -589,7 +589,7 @@ int Pattern(LinkList &a, LinkList &b) // p39-5
         {
             pre = pre->next;
             pa = pre;
-            pb = b;
+            pb = b->next;
         }
     }
     if (pb == NULL)
