@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <ctime>
 #include <stdio.h>
 /**定义模块**/
 typedef int ElemType;
@@ -68,7 +69,7 @@ bool printlist(RDLinklist L)
     }
     return true;
 }
-bool isSymphony(RDLinklist L)
+bool isSymphony(RDLinklist &L)
 {
     RDNode *p = L, *tail = L->prior;
     p = L->next;
@@ -94,21 +95,50 @@ bool isSymphony(RDLinklist L)
     }
 }
 /**实现模块**/
+void Del_All(RDLinklist &L)
+{
+    RDNode *p, *pre, *minp, *minpre;
+    while (L->next != L)
+    {
+        p = L->next;
+        pre = L;
+        minp = p;
+        minpre = pre;
+        while (p != L)
+        {
+            if (p->data < minp->data)
+            {
+                minp = p;
+                minpre = pre;
+            }
+            pre = p;
+            p = p->next;
+        }
+        printf("%d,", minp->data);
+        minpre->next = minp->next;
+        free(minp);
+    }
+    free(L);
+    printf("\nfinish!");
+}
 int main()
 {
+    srand(time(NULL)); // 设置随机数种子为当前时间
     RDLinklist L;
     InitList(L);
     int k;
     RDNode *p = L;
-    for (size_t i = 0; i < 1; i++)
+    for (size_t i = 0; i < 10; i++)
     {
-        scanf("%d", &k);
+        // scanf("%d", &k);
+        k = rand() % 20;
         RDNode *node = (RDNode *)malloc(sizeof(RDNode));
         node->data = k;
         InsertNextNode(p, node);
         p = p->next;
     }
     printlist(L);
-    printf("%d", isSymphony(L));
+
+    Del_All(L);
     return 0;
 }
