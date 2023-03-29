@@ -68,6 +68,38 @@ bool printlist(RDLinklist L)
     }
     return true;
 }
+bool isSymphony(RDLinklist L)
+{
+    int len;
+    RDNode *p = L, *tail = L->prior;
+    while (p->next != L)
+    {
+        len++;
+        p = p->next;
+    }
+
+    p = L->next;
+    while (p->next != tail || p->next != tail->prior)
+    {
+        if (p->data == tail->data)
+        {
+            p = p->next;
+            tail = tail->prior;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (p->next->data == tail->prior->data)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 /**实现模块**/
 int main()
 {
@@ -84,5 +116,6 @@ int main()
         p = p->next;
     }
     printlist(L);
+    printf("%d", isSymphony(L));
     return 0;
 }
