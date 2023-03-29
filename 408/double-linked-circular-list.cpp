@@ -95,7 +95,26 @@ bool isSymphony(RDLinklist &L)
     }
 }
 /**实现模块**/
-void Del_All(RDLinklist &L)
+// h2加到h1之后
+RDLinklist Link(RDLinklist &h1, RDLinklist &h2) // p39-18
+{
+    RDNode *p, *q;
+    p = h1;
+    while (p->next != h1)
+    {
+        p = p->next;
+    }
+    q = h2;
+    while (q->next != h2)
+    {
+        q = q->next;
+    }
+    p->next = h2->next;
+    q->next = h1;
+    return h1;
+}
+// 依次删除最小的
+void Del_All(RDLinklist &L) // p39-19
 {
     RDNode *p, *pre, *minp, *minpre;
     while (L->next != L)
@@ -124,8 +143,9 @@ void Del_All(RDLinklist &L)
 int main()
 {
     srand(time(NULL)); // 设置随机数种子为当前时间
-    RDLinklist L;
+    RDLinklist L, R;
     InitList(L);
+    InitList(R);
     int k;
     RDNode *p = L;
     for (size_t i = 0; i < 10; i++)
@@ -137,8 +157,21 @@ int main()
         InsertNextNode(p, node);
         p = p->next;
     }
+    RDNode *q = R;
+    for (size_t i = 0; i < 10; i++)
+    {
+        // scanf("%d", &k);
+        k = rand() % 20;
+        RDNode *node = (RDNode *)malloc(sizeof(RDNode));
+        node->data = k;
+        InsertNextNode(q, node);
+        q = q->next;
+    }
+    printlist(L);
+    printlist(R);
+
+    L = Link(L, R);
     printlist(L);
 
-    Del_All(L);
     return 0;
 }
