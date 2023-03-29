@@ -70,16 +70,9 @@ bool printlist(RDLinklist L)
 }
 bool isSymphony(RDLinklist L)
 {
-    int len;
     RDNode *p = L, *tail = L->prior;
-    while (p->next != L)
-    {
-        len++;
-        p = p->next;
-    }
-
     p = L->next;
-    while (p->next != tail || p->next != tail->prior)
+    while (p->next != tail && p->next != tail->prior)
     {
         if (p->data == tail->data)
         {
@@ -107,7 +100,7 @@ int main()
     InitList(L);
     int k;
     RDNode *p = L;
-    for (size_t i = 0; i < 8; i++)
+    for (size_t i = 0; i < 1; i++)
     {
         scanf("%d", &k);
         RDNode *node = (RDNode *)malloc(sizeof(RDNode));
