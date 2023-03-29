@@ -575,7 +575,7 @@ void Union(LinkList &La, LinkList &Lb) // p39-15
     free(Lb);
 }
 // 判断b是否为a的连续子序列
-int Pattern(LinkList &a, LinkList &b) // p39-5
+int Pattern(LinkList &a, LinkList &b) // p39-16
 {
     LNode *pa = a->next, *pb = b->next, *pre = pa;
     while (pa != NULL && pb != NULL)
@@ -601,6 +601,7 @@ int Pattern(LinkList &a, LinkList &b) // p39-5
         return -1;
     }
 }
+
 int main()
 {
 
